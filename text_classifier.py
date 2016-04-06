@@ -44,7 +44,7 @@ class TextProcessor:
 		return dict((k,0) for k in gen_n_grams)
 
 	@staticmethod
-	def preprocess_train(root_path):
+	def preprocess(root_path, lang='rus'):
 		print "Try to preprocess documents in %s" % root_path
 
 		for dr in os.listdir(root_path):
@@ -58,28 +58,14 @@ class TextProcessor:
 
 				for text in os.listdir(author_path):
 					if text.endswith(".txt"):
-						TextProcessor.process_document(author_path, text)
+						TextProcessor.process_document(author_path, text, lang)
 
 	@staticmethod
-	def preprocess_test(root_path):
-		print "Try to preprocess documents in %s" % root_path
-
-		for txt in os.listdir(root_path):
-			processed_path = root_path + '/' + TextProcessor.processed_dir
-
-			if not os.path.exists(processed_path):
-				os.makedirs(processed_path)
-
-			for text in os.listdir(root_path):
-				if text.endswith(".txt"):
-					TextProcessor.process_document(root_path, text)
-
-	@staticmethod
-	def process_document(author_path, text):
+	def process_document(author_path, text, lang):
 		# print ('\t%s/%s' % (author_path, text))
 		origin_text_path = author_path + '/' + text
 		content_origin = codecs.open(origin_text_path, encoding='utf-8')
-		content_processed = ''.join(e for e in content_origin.read().lower() if TextProcessor.in_voc(e, voc='rus'))
+		content_processed = ''.join(e for e in content_origin.read().lower() if TextProcessor.in_voc(e, voc=lang))
 		content_origin.close()
 
 		processed_path = author_path + '/' + TextProcessor.processed_dir + '/' + text
@@ -88,7 +74,7 @@ class TextProcessor:
 		processed_file.close()
 
 	@staticmethod
-	def get_processed_train(path):
+	def get_processed_data(path):
 		df = pd.DataFrame(columns=['Category', 'Item', 'Text'])
 
 		for author in os.listdir(path):
@@ -111,29 +97,6 @@ class TextProcessor:
 								"Text": content.read()
 							}, ignore_index=True )
 						content.close()
-
-		return df
-
-	@staticmethod
-	def get_processed_test(path):
-		df = pd.DataFrame(columns=['Category', 'Item', 'Text'])
-
-		processed_path = path + '/' + TextProcessor.processed_dir
-
-		if not os.path.exists(processed_path):
-			TextProcessor.preprocess_test(path)
-
-		for text in os.listdir(processed_path):
-			if text.endswith(".txt"):
-				text_path = processed_path + '/' + text
-				content = open(text_path, "r")
-				df = df.append(
-					{
-						"Category": '',
-						"Item": text[:-4],
-						"Text": content.read()
-					}, ignore_index=True )
-				content.close()
 
 		return df
 
