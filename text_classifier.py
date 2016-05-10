@@ -6,7 +6,7 @@ import codecs
 import operator
 import pandas as pd
 
-__all__ = ['TextProcessor', 'TextClassifier']
+__all__ = ['TextProcessor', 'TextClassifier', 'TextUtils']
 
 class TextProcessor:
 
@@ -14,7 +14,9 @@ class TextProcessor:
 
 	vocabulary = {'rus': [u'а', u'б', u'в', u'г', u'д', u'е', u'ё', u'ж', u'з', u'и', u'й', u'к',
            u'л', u'м', u'н', u'о', u'п', u'р', u'с', u'т', u'у', u'ф', u'х', u'ц',
-           u'ч', u'ш', u'щ', u'ъ', u'ы', u'ь', u'э', u'ю', u'я']}
+           u'ч', u'ш', u'щ', u'ъ', u'ы', u'ь', u'э', u'ю', u'я'],
+           'lat': [u'a', u'b', u'c', u'd', u'e', u'f', u'g', u'h', u'i', u'j', u'k', u'l',
+           u'm', u'n', u'o', u'p', u'q', u'r', u's', u't', u'u', u'v', u'w', u'x', u'y', u'z']}
 
 	@staticmethod
 	def in_voc(sym, voc='rus'):
@@ -61,14 +63,19 @@ class TextProcessor:
 						TextProcessor.process_document(author_path, text, lang)
 
 	@staticmethod
-	def process_document(author_path, text, lang):
+	def process_document(root_path, text, lang):
 		# print ('\t%s/%s' % (author_path, text))
-		origin_text_path = author_path + '/' + text
+		origin_text_path = root_path + '/' + text
 		content_origin = codecs.open(origin_text_path, encoding='utf-8')
 		content_processed = ''.join(e for e in content_origin.read().lower() if TextProcessor.in_voc(e, voc=lang))
 		content_origin.close()
 
-		processed_path = author_path + '/' + TextProcessor.processed_dir + '/' + text
+		processed_loc = root_path + '/' + TextProcessor.processed_dir
+		processed_path = processed_loc + '/' + text
+
+		if not os.path.exists(processed_loc):
+			os.makedirs(processed_loc)
+
 		processed_file = codecs.open(processed_path, 'w', encoding='utf-8')
 		processed_file.write(content_processed)
 		processed_file.close()
@@ -100,17 +107,12 @@ class TextProcessor:
 
 		return df
 
-class TextClassifier: 
-	n_gram = 0
-	train = pd.DataFrame()
-	metrics = ['l1']
 
-	def __init__(self, n_gram = 2):
-		self.n_gram = 3 if n_gram > 3 else 1 if n_gram < 1 else n_gram
+class TextUtils:
 
 	@staticmethod
-	def get_n_gram_dict(text, n):
-		ngc = TextProcessor.generate_empty_dict(n)
+	def get_n_gram_dict(text, n, lang='rus'):
+		ngc = TextProcessor.generate_empty_dict(n, lang)
 
 		text = text.decode('utf-8')
 		for i in range(len(text) - n + 1):
@@ -132,6 +134,32 @@ class TextClassifier:
 		return dist
 
 	@staticmethod
+	def get_normalized_dict(data):
+		norm = data.copy()
+		sum_values = sum(data.values())
+		for key in norm:
+			norm[key] = norm[key] / float(sum_values)
+
+		return norm
+
+
+	@staticmethod
+	def get_ordered_dict(data, reverse=False):	
+		return sorted(data.iteritems(), key=operator.itemgetter(0), reverse=reverse)
+
+
+class TextClassifier: 
+	n_gram = 0
+	train = pd.DataFrame()
+	metrics = ['l1']
+	lang = ''
+
+	def __init__(self, n_gram = 2, lang = 'rus'):
+		self.n_gram = 3 if n_gram > 3 else 1 if n_gram < 1 else n_gram
+		self.lang = lang
+
+
+	@staticmethod
 	def calculate_distance(corpus, item_row, metric='l1'):
 		corpus_dict = {}
 		sum_len = 0
@@ -139,7 +167,7 @@ class TextClassifier:
 		item_dict = item_row['voc'].copy()
 
 		for i, row in corpus.iterrows():
-			corpus_dict = TextClassifier.combine_dicts(corpus_dict, row['voc'])
+			corpus_dict = TextUtils.combine_dicts(corpus_dict, row['voc'])
 			sum_len += len(row['Text'].decode('utf-8'))
 
 		for key in corpus_dict:
@@ -151,12 +179,16 @@ class TextClassifier:
 		if (metric not in TextClassifier.metrics):
 			raise ValueError("metric must be `l1`")
 
-		return TextClassifier.l1_distance(corpus_dict, item_dict)
+		return TextUtils.l1_distance(corpus_dict, item_dict)
+
+	@staticmethod
+	def calculate_determination(voc):
+		return sorted(voc.values(), reverse=True)
 
 	def fit_transform(self, data):
 		self.train = data.copy()
 
-		self.train['voc'] = self.train.apply(lambda row: TextClassifier.get_n_gram_dict(row['Text'], self.n_gram), axis=1)
+		self.train['voc'] = self.train.apply(lambda row: TextUtils.get_n_gram_dict(row['Text'], self.n_gram, self.lang), axis=1)
 
 		for cat in self.train['Category'].unique():
 			self.train['dist_' + cat] = self.train.apply(
@@ -165,6 +197,8 @@ class TextClassifier:
 					row
 				), axis=1
 			)
+
+		self.train['determination'] = self.train['voc'].apply(TextClassifier.calculate_determination)
 
 		return self.train
 
