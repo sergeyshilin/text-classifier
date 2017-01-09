@@ -1,0 +1,8 @@
+#!/bin/bash
+
+declare -a folders=("bulgarian" "croatian" "czech" "danish" "dutch" "english" "french" "german" "italian" "norwegian" "polish" "romanian" "serbian" "spanish" "swedish")
+
+for folder in "${folders[@]}"
+do
+	find wiki_output/$folder -name '*bz2' -exec bunzip2 -c {} \; > wiki_output/xml/$folder.xml
+done
