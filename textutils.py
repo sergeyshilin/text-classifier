@@ -393,12 +393,14 @@ class HurstExponent:
 
     def calculate_hurst_n(self, N, n):
         coef_sum = 0
+        rescale_coef = np.mean([np.log(k / float(N)) ** 2 for k in range(100, N + 1, 100)])
         mean_ANL = self.mean_amplitude_noise_logarithm(N, n)
+
         for k in range(100, N + 1, 100):
             regression_coef = self.amplitude_noise_logarithm(n, k) - mean_ANL
             sample_len_log = 1 + np.log(k / float(N))
             coef_sum += regression_coef * sample_len_log
-        return coef_sum / (float(N) / 100)
+        return coef_sum / (float(N) / 100) / rescale_coef
 
     def mean_amplitude_noise_logarithm(self, N, n):
         return np.sum([self.amplitude_noise_logarithm(n, k) for k in range(100, N + 1, 100)]) / (float(N) / 100)
