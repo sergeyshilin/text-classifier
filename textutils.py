@@ -305,9 +305,22 @@ class TextUtils:
 
     @staticmethod
     def l1_distance(corpus, item):
+        """ Calculate L1 distance between dictionaries
+        
+        Args:
+            corpus (dict): First text (corpus) ordered dictionary
+            item (dict): Second text ordered dictionary
+        
+        Returns:
+            dist (float): L1 Distance
+        """
+        min_len = min(len(corpus), len(item))
+        corpus_norm = corpus[:min_len] / np.sum(corpus[:min_len])
+        item_norm = item[:min_len] / np.sum(item[:min_len])
+
         dist = 0
-        for sym in item:
-            dist += abs(corpus[sym] - item[sym])
+        for x, y in zip(corpus_norm, item_norm):
+            dist += abs(x - y)
         return dist
 
     @staticmethod
