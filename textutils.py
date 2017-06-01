@@ -155,7 +155,13 @@ class TextProcessor:
                     u'с': u's', u'т': u't', u'ћ': u'c', u'ф': u'f', u'х': u'h', u'ц': u'c', u'ч': u'c',
                     u'џ': u'd', u'ш': u's', u'й': u'j', u'щ': u's', u'ъ': u'', u'ь': u'', u'ł': u'l',
                     u'ń': u'n', u'ś': u's', u'ź': u'z', u'ż': u'z', u'ď': u'd', u'ň': u'n', u'ř': u'r',
-                    u'ť': u't'}
+                    u'ť': u't', u'а': u'a', u'о': u'o', u'э': u'e', u'у': u'u', u'и': u'i', u'е': u'e',
+                    u'ё': u'e', u'я': u'a', u'ы': u'y', u'a': u'a', u'o': u'o', u'i': u'i', u'e': u'e',
+                    u'u': u'u', u'á': u'a', u'é': u'e', u'ě': u'e', u'í': u'i', u'ó': u'o', u'ú': u'u',
+                    u'ů': u'u', u'ý': u'y', u'y': u'y', u'å': u'a', u'æ': u'a', u'ø': u'o', u'à': u'a',
+                    u'â': u'a', u'è': u'e', u'ê': u'e', u'ë': u'e', u'ï': u'i', u'î': u'i', u'ô': u'o',
+                    u'œ': u'o', u'ù': u'u', u'û': u'u', u'ü': u'u', u'ÿ': u'y', u'ì': u'i', u'ò': u'o',
+                    u'ą': u'a', u'ę': u'e', u'ă': u'a', u'ä': u'a', u'ö': u'o', u'ю': u'u'}
 
 
     @staticmethod
