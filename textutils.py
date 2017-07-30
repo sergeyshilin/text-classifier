@@ -142,7 +142,23 @@ class TextProcessor:
         'sv_con': [u'b', u'c', u'd', u'f', u'g', u'h', u'j', u'k', u'l', u'm', u'n', u'p', u'q', u'r',
                     u's', u't', u'v', u'w', u'x', u'z'],
 
-        'sv_vow': [u'a', u'e', u'i', u'o', u'u', u'y', u'å', u'ä', u'ö']
+        'sv_vow': [u'a', u'e', u'i', u'o', u'u', u'y', u'å', u'ä', u'ö'],
+
+        'el': [u'α', u'β', u'γ', u'δ', u'ε', u'ζ', u'η', u'θ', u'ι', u'κ', u'λ', u'μ',
+                u'ν', u'ξ', u'ο', u'π', u'ρ', u'σ', u'ς', u'τ', u'υ', u'φ', u'χ', u'ψ', u'ω'],
+
+        'el_ext': [u'α', u'β', u'γ', u'δ', u'ε', u'ζ', u'η', u'θ', u'ι', u'κ', u'λ', u'μ',
+                u'ν', u'ξ', u'ο', u'π', u'ρ', u'σ', u'ς', u'τ', u'υ', u'φ', u'χ', u'ψ', u'ω',
+                u'ἀ', u'ἁ', u'ἂ', u'ἃ', u'ἄ', u'ἅ', u'ἆ', u'ἇ', u'ἐ', u'ἑ', u'ἒ', u'ἓ', u'ἔ',
+                u'ἕ', u'ἠ', u'ἡ', u'ἢ', u'ἣ', u'ἤ', u'ἥ', u'ἦ', u'ἧ', u'ἰ', u'ἱ', u'ἲ', u'ἳ',
+                u'ἴ', u'ἵ', u'ἶ', u'ἷ', u'ὀ', u'ὁ', u'ὂ', u'ὃ', u'ὄ', u'ὅ', u'ὐ', u'ὑ', u'ὒ',
+                u'ὓ', u'ὔ', u'ὕ', u'ὖ', u'ὗ', u'ὠ', u'ὡ', u'ὢ', u'ὣ', u'ὤ', u'ὥ', u'ὦ', u'ὧ',
+                u'ὰ', u'ά', u'ὲ', u'έ', u'ὴ', u'ή', u'ὶ', u'ί', u'ὸ', u'ό', u'ὺ', u'ύ', u'ὼ',
+                u'ώ', u'ᾀ', u'ᾁ', u'ᾂ', u'ᾃ', u'ᾄ', u'ᾅ', u'ᾆ', u'ᾇ', u'ᾐ', u'ᾑ', u'ᾒ', u'ᾓ',
+                u'ᾔ', u'ᾕ', u'ᾖ', u'ᾗ', u'ᾠ', u'ᾡ', u'ᾢ', u'ᾣ', u'ᾤ', u'ᾥ', u'ᾦ', u'ᾧ', u'ᾰ',
+                u'ᾱ', u'ᾲ', u'ᾳ', u'ᾴ', u'ᾶ', u'ᾷ', u'ῂ', u'ῃ', u'ῄ', u'ῆ', u'ῇ', u'ῐ', u'ῑ',
+                u'ῒ', u'ΐ', u'ῖ', u'ῗ', u'ῠ', u'ῡ', u'ῢ', u'ΰ', u'ῤ', u'ῥ', u'ῦ', u'ῧ', u'ῲ',
+                u'ῳ', u'ῴ', u'ῶ', u'ῷ', u'έ', u'ύ', u'ή', u'ϊ', u'ώ', u'ί', u'ϋ', u'ά', u'ό']
     }
 
     english_dict = {u'b': u'b', u'c': u'c', u'č': u'c', u'ć': u'c', u'd': u'd', u'ǆ': u'd', u'đ': u'd', 
@@ -162,6 +178,31 @@ class TextProcessor:
                     u'â': u'a', u'è': u'e', u'ê': u'e', u'ë': u'e', u'ï': u'i', u'î': u'i', u'ô': u'o',
                     u'œ': u'o', u'ù': u'u', u'û': u'u', u'ü': u'u', u'ÿ': u'y', u'ì': u'i', u'ò': u'o',
                     u'ą': u'a', u'ę': u'e', u'ă': u'a', u'ä': u'a', u'ö': u'o', u'ю': u'u'}
+
+    diacritics_dict = {u'ἀ': u'α', u'ἁ': u'α', u'ἂ': u'α', u'ἃ': u'α', u'ἄ': u'α', u'ἅ': u'α',
+                       u'ἆ': u'α', u'ἇ': u'α', u'ά': u'α', u'ὰ': u'α', u'ά': u'α', u'ᾀ': u'α',
+                       u'ᾁ': u'α', u'ᾂ': u'α', u'ᾃ': u'α', u'ᾄ': u'α', u'ᾅ': u'α', u'ᾆ': u'α',
+                       u'ᾇ': u'α', u'ᾰ': u'α', u'ᾱ': u'α', u'ᾲ': u'α', u'ᾳ': u'α', u'ᾴ': u'α',
+                       u'ᾶ': u'α', u'ᾷ': u'α',
+                       u'ἐ': u'ε', u'ἑ': u'ε', u'ἒ': u'ε', u'ἓ': u'ε', u'ἔ': u'ε', u'ἕ': u'ε',
+                       u'ὲ': u'ε', u'έ': u'ε', u'έ': u'ε',
+                       u'ἠ': u'η', u'ἡ': u'η', u'ἢ': u'η', u'ἣ': u'η', u'ἤ': u'η', u'ἥ': u'η',
+                       u'ἦ': u'η', u'ἧ': u'η', u'ὴ': u'η', u'ή': u'η', u'ᾐ': u'η', u'ᾑ': u'η',
+                       u'ᾒ': u'η', u'ᾓ': u'η', u'ᾔ': u'η', u'ᾕ': u'η', u'ᾖ': u'η', u'ᾗ': u'η',
+                       u'ῂ': u'η', u'ῃ': u'η', u'ῄ': u'η', u'ῆ': u'η', u'ῇ': u'η', u'ή': u'η',
+                       u'ἰ': u'ι', u'ἱ': u'ι', u'ἲ': u'ι', u'ἳ': u'ι', u'ἴ': u'ι', u'ἵ': u'ι',
+                       u'ἶ': u'ι', u'ἷ': u'ι', u'ὶ': u'ι', u'ί': u'ι', u'ῐ': u'ι', u'ῑ': u'ι',
+                       u'ῒ': u'ι', u'ΐ': u'ι', u'ῖ': u'ι', u'ῗ': u'ι', u'ϊ': u'ι', u'ί': u'ι',
+                       u'ὀ': u'ο', u'ὁ': u'ο', u'ὂ': u'ο', u'ὃ': u'ο', u'ὄ': u'ο', u'ὅ': u'ο',
+                       u'ὸ': u'ο', u'ό': u'ο', u'ό': u'ο',
+                       u'ὐ': u'υ', u'ὑ': u'υ', u'ὒ': u'υ', u'ὓ': u'υ', u'ὔ': u'υ', u'ὕ': u'υ',
+                       u'ὖ': u'υ', u'ὗ': u'υ', u'ὺ': u'υ', u'ύ': u'υ', u'ῠ': u'υ', u'ῡ': u'υ',
+                       u'ῢ': u'υ', u'ΰ': u'υ', u'ῦ': u'υ', u'ῧ': u'υ', u'ύ': u'υ', u'ϋ': u'υ',
+                       u'ὠ': u'ω', u'ὡ': u'ω', u'ὢ': u'ω', u'ὣ': u'ω', u'ὤ': u'ω', u'ὥ': u'ω',
+                       u'ὦ': u'ω', u'ὧ': u'ω', u'ὼ': u'ω', u'ώ': u'ω', u'ᾠ': u'ω', u'ᾡ': u'ω',
+                       u'ᾢ': u'ω', u'ᾣ': u'ω', u'ᾤ': u'ω', u'ᾥ': u'ω', u'ᾦ': u'ω', u'ᾧ': u'ω',
+                       u'ῲ': u'ω', u'ῳ': u'ω', u'ῴ': u'ω', u'ῶ': u'ω', u'ῷ': u'ω', u'ώ': u'ω',
+                       u'ῤ': u'ρ', u'ῥ': u'ρ'}
 
 
     @staticmethod
@@ -227,13 +268,14 @@ class TextProcessor:
         return dict((k,0) for k in gen_n_grams)
 
     @staticmethod
-    def preprocess_folder(folder_path, lang='en', join=False):
+    def preprocess_folder(folder_path, lang='en', join=False, remove_diacritics=False):
         """Remove all unneccessary symbols from every .txt file in :folder_path
         
         Args:
             folder_path (str): Folder with .txt files path
             lang (str, optional): Language of texts in folder
             join (bool, optional): Merge all files after preprocessing to processed/all.txt
+            remove_diacritics (bool, optional): Remove all diacritical marks from the text
         
         Returns:
             void: 
@@ -247,20 +289,21 @@ class TextProcessor:
         for text in os.listdir(folder_path):
             if text.endswith(".txt"):
                 print ('\t---> %s/%s' % (folder_path, text))
-                TextProcessor.preprocess_document(folder_path, text, lang)
+                TextProcessor.preprocess_document(folder_path, text, lang, remove_diacritics)
         print "Files are successfully processed to " + processed_path
 
         if (join):
             TextProcessor.merge_files(processed_path)
 
     @staticmethod
-    def preprocess_document(file_path, name, lang='en'):
+    def preprocess_document(file_path, name, lang='en', remove_diacritics=False):
         """Remove all unneccessary symbols from .txt file
         
         Args:
             file_path (str): File folder
             name (str): File name
             lang (str, optional): File main language
+            remove_diacritics (bool, optional): Remove all diacritical marks from the text
         
         Returns:
             void: 
@@ -269,6 +312,10 @@ class TextProcessor:
         content_origin = codecs.open(origin_text_path, encoding='utf-8')
         content_processed = ''.join(e for e in content_origin.read().lower() if TextProcessor.in_voc(e, voc=lang))
         content_origin.close()
+
+        if remove_diacritics:
+            content_processed = ''.join(e if e not in TextProcessor.diacritics_dict 
+                else TextProcessor.diacritics_dict[e] for e in content_processed)
 
         processed_loc = file_path + '/' + TextProcessor.processed_dir
         processed_path = processed_loc + '/' + name
